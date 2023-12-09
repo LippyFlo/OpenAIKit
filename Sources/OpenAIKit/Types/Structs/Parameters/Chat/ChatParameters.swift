@@ -101,6 +101,8 @@ public struct ChatParameters {
 
     /// A list of functions the model may generate JSON inputs for.
     public var functions: [Function]?
+    
+    public var maxTokens: Int?
 
     public init(
         model: ChatModels,
@@ -116,7 +118,8 @@ public struct ChatParameters {
         logitBias: [String : Int]? = nil,
         user: String? = nil,
         functionCall: String? = nil,
-        functions: [Function]? = nil
+        functions: [Function]? = nil,
+        maxTokens: Int? = nil
     ) {
         self.model = model
         self.customModel = customModel
@@ -165,6 +168,10 @@ public struct ChatParameters {
 
         if let functions = self.functions {
             result["functions"] = functions.map { $0.body }
+        }
+        
+        if let maxTokens = self.maxTokens {
+            result["max_tokens"] = maxTokens
         }
 
         return result
